@@ -1,9 +1,8 @@
-/*
 #include <iostream>
 #include <string>
 #include <limits>
-#include <cstdlib>
-#include <ctime>
+#include <random>
+
 
 enum class CharacterClass { Warlock, Warrior };
 
@@ -21,7 +20,7 @@ public:
     {
         if (characterClass == CharacterClass::Warlock) {
             if (damage > 2 * power) {
-                if (rand() % 2 == 0) { // 50% шанс на избежание урона
+                if (randomChance()) { //50% шанс на избежание урона
                     return;
                 }
                 else
@@ -55,6 +54,14 @@ public:
 private:
     int originalHealth() {
         return 100; // НАчальное здоровье
+    }
+
+    bool randomChance() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dist(0, 1);
+
+        return dist(gen) == 1; // 50% шанс
     }
 };
 
@@ -104,11 +111,7 @@ GameCharacter createCharacter() {
     return GameCharacter(name, health, characterClass, power);
 }
 
-
-
 int main() {
-    srand(time(NULL)); // Для генерации случайных чисел
-
     GameCharacter character = createCharacter();
 
     while (character.health > 0) {
@@ -126,4 +129,3 @@ int main() {
 
     return 0;
 }
-*/
