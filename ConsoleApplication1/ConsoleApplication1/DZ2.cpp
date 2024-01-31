@@ -4,7 +4,7 @@
 #include <numeric>
 #include <limits>
 
-// Function to input numbers until 0 is entered
+// функция чтения чисел с консоли пока не введен 0
 std::vector<int> readNumbers() {
     std::vector<int> numbers;
     int input;
@@ -14,14 +14,14 @@ std::vector<int> readNumbers() {
         numbers.push_back(input);
     }
 
-    // Clear input stream
+    // Очищаем поток ввода, чтобы не было проблем с последующим вводом
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     return numbers;
 }
 
-// Function to find max damage
+// Функция для поиска максимального урона
 void maxDamage(const std::vector<int>& numbers) {
     auto it = std::max_element(numbers.begin(), numbers.end());
     if (it != numbers.end() && *it > 0) {
@@ -31,7 +31,7 @@ void maxDamage(const std::vector<int>& numbers) {
     }
 }
 
-// Function to find min damage
+// Функция для поиска минимального урона
 void minDamage(const std::vector<int>& numbers) {
     int min = std::numeric_limits<int>::max();
     for (int num : numbers) {
@@ -46,7 +46,7 @@ void minDamage(const std::vector<int>& numbers) {
     }
 }
 
-// Function to calculate total cure
+// Функция для поиска лечения
 void cure(const std::vector<int>& numbers) {
     int sum = std::accumulate(numbers.begin(), numbers.end(), 0, [](int total, int num) {
         return num < 0 ? total + num : total;
@@ -54,7 +54,7 @@ void cure(const std::vector<int>& numbers) {
     std::cout << "Total cure is: " << -sum << std::endl; // Cure is represented as negative, so make it positive for display
 }
 
-// Function to calculate total harm
+// Функция для поиска урона
 void harm(const std::vector<int>& numbers) {
     int sum = std::accumulate(numbers.begin(), numbers.end(), 0, [](int total, int num) {
         return num > 0 ? total + num : total;
@@ -62,7 +62,7 @@ void harm(const std::vector<int>& numbers) {
     std::cout << "Total harm is: " << sum << std::endl;
 }
 
-// Function to check for zeros
+// Функция для поиска нулей
 void zero(const std::vector<int>& numbers) {
     int count = std::count(numbers.begin(), numbers.end(), 0);
     std::cout << "Number of zeros: " << count << std::endl;
@@ -71,7 +71,7 @@ void zero(const std::vector<int>& numbers) {
 int main() {
     std::vector<int> numbers = readNumbers();
 
-    // Presenting menu to choose the function
+    // Меню
     int choice = 0;
     do {
         std::cout << "Choose function:" << std::endl;
