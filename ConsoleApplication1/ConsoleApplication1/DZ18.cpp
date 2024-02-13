@@ -35,6 +35,7 @@ public:
     virtual ~DamageModifier() = default; // Виртуальный деструктор для правильной очистки
 };
 
+// Класс модификатора урона добавления
 class AdditionDamageModifier : public DamageModifier {
     float m_value;
 public: 
@@ -43,7 +44,7 @@ public:
         return Damage + m_value;
     }
 };
-
+// Классы модификатора урона умножения
 class MultiplicationDamageModifier : public DamageModifier {
     float m_value;
 public:
@@ -53,6 +54,7 @@ public:
     }
 };
 
+// Класс персонажа
 class Character {
     std::shared_ptr<Weapon> m_weapon;
     std::vector<std::shared_ptr<DamageModifier>> m_modifiers;
