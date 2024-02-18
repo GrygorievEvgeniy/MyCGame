@@ -56,17 +56,17 @@ public:
 
 // Класс персонажа
 class Character {
-    std::shared_ptr<Weapon> m_weapon;
-    std::vector<std::shared_ptr<DamageModifier>> m_modifiers;
+    std::unique_ptr<Weapon> m_weapon;
+    std::vector<std::unique_ptr<DamageModifier>> m_modifiers;
 public:
-    void SetWeapon(const std::shared_ptr<Weapon>& weapon) {
-        m_weapon = weapon;
+    void SetWeapon(std::unique_ptr<Weapon> weapon) {
+        m_weapon = std::move(weapon);
         std::cout << "Using " << m_weapon->GetName() << ", Basic Damage: " << m_weapon->GetDamage() << std::endl;
         OutputModifiedDamage();
     }
 
-    void AddModifier(const std::shared_ptr<DamageModifier>& modifier) {
-        m_modifiers.push_back(modifier);
+    void AddModifier(std::unique_ptr<DamageModifier> modifier) {
+        m_modifiers.push_back(std::move(modifier));
     }
 
     float GetModifiedDamage() const {
@@ -86,20 +86,12 @@ private:
 };
 
 int main() {
-    Character character;
-    auto bow = std::make_shared<Bow>();
-    auto magic = std::make_shared<Magic>();
-    auto sword = std::make_shared<Sword>();
-
-    // Модификаторы урона
-    auto additionModifier = std::make_shared<AdditionDamageModifier>(3.0f); // Добавлен для демонстрации
-    auto multiplicationModifier = std::make_shared<MultiplicationDamageModifier>(1.2f); // Добавлен для демонстрации
-    character.AddModifier(additionModifier);
-    character.AddModifier(multiplicationModifier);
-    // Установка оружия и вывод урона базового и модифицированного
-    character.SetWeapon(bow);
-    character.SetWeapon(magic);
-    character.SetWeapon(sword);
-    return 0;
+        Character character;
+        character.AddModifier(std::make_unique<AdditionDamageModifier>(3.0f));
+        character.AddModifier(std::make_unique<MultiplicationDamageModifier>(1.2f));
+        character.SetWeapon(std::make_unique<Bow>());
+        character.SetWeapon(std::make_unique<Magic>());
+        character.SetWeapon(std::make_unique<Sword>());
+        return 0;
 }
 
