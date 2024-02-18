@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 
+
 class Observer {
 public:
     virtual ~Observer() {}  // Virtual destructor
@@ -35,7 +36,7 @@ public:
     ConcreteObserver(const std::string &name) : m_name(name) {}
 
     void update(const std::string &message) override {
-        std::cout << m_name << " received message: " << message << std::endl;
+        std::cout << m_name << " message recived: " << message << std::endl;
     }
 
 private:
